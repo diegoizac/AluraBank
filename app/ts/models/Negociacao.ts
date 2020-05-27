@@ -8,7 +8,3 @@ export class Negociacao {
     return this.quantidade * this.valor;
   }
 }
-
-const negociacao = new Negociacao(new Date(), 1, 100);
-console.log(negociacao.data);
-console.log(negociacao.volume);
