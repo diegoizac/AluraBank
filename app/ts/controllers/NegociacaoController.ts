@@ -1,6 +1,6 @@
 import { NegociacoesView, MensagemView } from "../views/index";
 import { Negociacoes, Negociacao, NegociacaoParcial } from "../models/index";
-import { domInject } from "../helpers/decorators/index";
+import { domInject, throttle } from "../helpers/decorators/index";
 
 export class NegociacaoController {
   @domInject("#data")
@@ -21,9 +21,8 @@ export class NegociacaoController {
     this._negociacoesView.update(this._negociacoes);
   }
 
-  adiciona(event: Event) {
-    event.preventDefault();
-
+  @throttle()
+  adiciona() {
     let data = new Date(this._inputData.val().replace(/-/g, ","));
     if (!this._ehDiaUtil(data)) {
       this._mensagemView.update(
@@ -50,6 +49,7 @@ export class NegociacaoController {
     );
   }
 
+  @throttle()
   importaDados() {
     function isOK(res: Response) {
       if (res.ok) {
